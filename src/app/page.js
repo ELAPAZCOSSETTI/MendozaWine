@@ -1,101 +1,38 @@
-"use client";
+import { Suspense } from "react";
+import SearchBar from "@/components/search/SearchBar";
+import CategoryPills from "@/components/search/CategoryPills";
+import ListingGrid from "@/components/listings/ListingGrid";
+import { getFeaturedListings } from "@/lib/repositories/listings";
 
-import { useState } from "react";
-
-export default function Home() {
-  const [dias, setDias] = useState(3);
-  const [zona, setZona] = useState("Luján de Cuyo");
-  const [presupuesto, setPresupuesto] = useState("Medio");
-  const [itinerario, setItinerario] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setItinerario(null);
-
-    try {
-      const res = await fetch("/api/itinerario", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ dias: Number(dias), zona, presupuesto }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Error al generar itinerario");
-      setItinerario(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
+export default async function Home() {
+  const destacados = await getFeaturedListings(8);
 
   return (
-    <main className="flex min-h-screen flex-col items-center gap-8 px-6 py-16">
-      <h1 className="text-3xl font-semibold">BodegaPass</h1>
-      <p className="text-center text-zinc-500">
-        Generá tu itinerario de turismo enológico en Mendoza
-      </p>
+    <main>
+      <section className="bg-primary-900 px-4 py-16 text-cream-50 sm:px-6 sm:py-24 lg:px-8">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+          <h1 className="text-3xl font-bold sm:text-5xl">
+            Descubrí Mendoza a través de sus bodegas
+          </h1>
+          <p className="text-primary-100/90 sm:text-lg">
+            Bodegas, restaurantes y experiencias en Luján de Cuyo, Valle de Uco,
+            Maipú y la Ciudad de Mendoza.
+          </p>
+          <div className="w-full max-w-2xl">
+            <SearchBar />
+          </div>
+        </div>
+      </section>
 
-      <form onSubmit={handleSubmit} className="flex w-full max-w-md flex-col gap-4">
-        <label className="flex flex-col gap-1">
-          Días de estadía
-          <input
-            type="number"
-            min={1}
-            max={14}
-            value={dias}
-            onChange={(e) => setDias(e.target.value)}
-            className="rounded border border-zinc-300 px-3 py-2"
-            required
-          />
-        </label>
-
-        <label className="flex flex-col gap-1">
-          Zona
-          <select
-            value={zona}
-            onChange={(e) => setZona(e.target.value)}
-            className="rounded border border-zinc-300 px-3 py-2"
-          >
-            <option>Luján de Cuyo</option>
-            <option>Valle de Uco</option>
-            <option>Maipú</option>
-            <option>Ciudad</option>
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1">
-          Presupuesto
-          <select
-            value={presupuesto}
-            onChange={(e) => setPresupuesto(e.target.value)}
-            className="rounded border border-zinc-300 px-3 py-2"
-          >
-            <option>Económico</option>
-            <option>Medio</option>
-            <option>Exclusivo</option>
-          </select>
-        </label>
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-full bg-foreground px-5 py-3 text-background disabled:opacity-50"
-        >
-          {loading ? "Generando..." : "Generar Itinerario"}
-        </button>
-      </form>
-
-      {error && <p className="text-red-500">{error}</p>}
-
-      {itinerario && (
-        <pre className="w-full max-w-md overflow-auto rounded bg-black/[.04] p-4 text-sm dark:bg-white/[.06]">
-          {JSON.stringify(itinerario, null, 2)}
-        </pre>
-      )}
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-2xl font-semibold text-foreground">Destacados</h2>
+          <Suspense fallback={null}>
+            <CategoryPills />
+          </Suspense>
+        </div>
+        <ListingGrid listings={destacados} />
+      </section>
     </main>
   );
 }
