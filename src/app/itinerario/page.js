@@ -58,12 +58,12 @@ export default function Itinerario() {
           <select
             value={zona}
             onChange={(e) => setZona(e.target.value)}
-            className="rounded border border-stone-300 px-3 py-2"
+            className="rounded border border-stone-300 bg-background px-3 py-2 text-foreground"
           >
-            <option>Luján de Cuyo</option>
-            <option>Valle de Uco</option>
-            <option>Maipú</option>
-            <option>Ciudad</option>
+            <option className="bg-background text-foreground">Luján de Cuyo</option>
+            <option className="bg-background text-foreground">Valle de Uco</option>
+            <option className="bg-background text-foreground">Maipú</option>
+            <option className="bg-background text-foreground">Ciudad</option>
           </select>
         </label>
 
@@ -72,11 +72,11 @@ export default function Itinerario() {
           <select
             value={presupuesto}
             onChange={(e) => setPresupuesto(e.target.value)}
-            className="rounded border border-stone-300 px-3 py-2"
+            className="rounded border border-stone-300 bg-background px-3 py-2 text-foreground"
           >
-            <option>Económico</option>
-            <option>Medio</option>
-            <option>Exclusivo</option>
+            <option className="bg-background text-foreground">Económico</option>
+            <option className="bg-background text-foreground">Medio</option>
+            <option className="bg-background text-foreground">Exclusivo</option>
           </select>
         </label>
 

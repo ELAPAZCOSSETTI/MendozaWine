@@ -19,11 +19,13 @@ export default function FilterBar({ filtrosActuales }) {
           id="zona"
           name="zona"
           defaultValue={zona}
-          className="rounded-lg border border-primary-100 bg-background px-3 py-2 text-sm"
+          className="rounded-lg border border-primary-100 bg-background px-3 py-2 text-sm text-foreground"
         >
-          <option value="">Todas las zonas</option>
+          <option value="" className="bg-background text-foreground">
+            Todas las zonas
+          </option>
           {ZONAS.map((z) => (
-            <option key={z} value={z}>
+            <option key={z} value={z} className="bg-background text-foreground">
               {z}
             </option>
           ))}

@@ -10,11 +10,13 @@ export default function SearchBar({ zonaInicial = "", tipoInicial = "" }) {
       <select
         name="zona"
         defaultValue={zonaInicial}
-        className="flex-1 rounded-full bg-transparent px-4 py-2 text-sm text-foreground outline-none"
+        className="flex-1 rounded-full bg-background px-4 py-2 text-sm text-foreground outline-none"
       >
-        <option value="">Cualquier zona</option>
+        <option value="" className="bg-background text-foreground">
+          Cualquier zona
+        </option>
         {ZONAS.map((zona) => (
-          <option key={zona} value={zona}>
+          <option key={zona} value={zona} className="bg-background text-foreground">
             {zona}
           </option>
         ))}
@@ -25,11 +27,13 @@ export default function SearchBar({ zonaInicial = "", tipoInicial = "" }) {
       <select
         name="tipo"
         defaultValue={tipoInicial}
-        className="flex-1 rounded-full bg-transparent px-4 py-2 text-sm text-foreground outline-none"
+        className="flex-1 rounded-full bg-background px-4 py-2 text-sm text-foreground outline-none"
       >
-        <option value="">Cualquier experiencia</option>
+        <option value="" className="bg-background text-foreground">
+          Cualquier experiencia
+        </option>
         {TIPOS.map((tipo) => (
-          <option key={tipo} value={tipo}>
+          <option key={tipo} value={tipo} className="bg-background text-foreground">
             {TIPO_LABELS[tipo]}
           </option>
         ))}
