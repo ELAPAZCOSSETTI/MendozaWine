@@ -56,3 +56,18 @@ export async function getListingById(id) {
 export async function getFeaturedListings(limit = 8) {
   return LISTINGS.filter((l) => l.destacado).slice(0, limit);
 }
+
+const TAGS_PAISAJE = ["vistas-cordillera", "vistas-vinedos", "aire-libre"];
+
+export async function getCarouselHighlights(limit = 6) {
+  const candidatos = LISTINGS.filter(
+    (l) => l.type === "experiencia" || l.tags.some((tag) => TAGS_PAISAJE.includes(tag)),
+  );
+
+  const ordenados = [...candidatos].sort((a, b) => {
+    if (a.destacado !== b.destacado) return a.destacado ? -1 : 1;
+    return b.rating - a.rating;
+  });
+
+  return ordenados.slice(0, limit);
+}

@@ -2,10 +2,14 @@ import { Suspense } from "react";
 import SearchBar from "@/components/search/SearchBar";
 import CategoryPills from "@/components/search/CategoryPills";
 import ListingGrid from "@/components/listings/ListingGrid";
-import { getFeaturedListings } from "@/lib/repositories/listings";
+import HighlightsCarousel from "@/components/home/HighlightsCarousel";
+import { getFeaturedListings, getCarouselHighlights } from "@/lib/repositories/listings";
 
 export default async function Home() {
-  const destacados = await getFeaturedListings(8);
+  const [destacados, highlights] = await Promise.all([
+    getFeaturedListings(8),
+    getCarouselHighlights(6),
+  ]);
 
   return (
     <main>
@@ -22,6 +26,13 @@ export default async function Home() {
             <SearchBar />
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-10 lg:px-8">
+        <h2 className="mb-4 text-2xl font-semibold text-foreground">
+          Paisajes y experiencias de enoturismo
+        </h2>
+        <HighlightsCarousel items={highlights} />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
