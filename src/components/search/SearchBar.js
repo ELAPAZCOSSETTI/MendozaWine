@@ -5,7 +5,7 @@ export default function SearchBar({ zonaInicial = "", tipoInicial = "" }) {
     <form
       action="/buscar"
       method="GET"
-      className="flex w-full flex-col gap-3 rounded-full border border-primary-100 bg-background p-3 shadow-md sm:flex-row sm:items-center sm:gap-2"
+      className="flex w-full flex-col gap-3 rounded-3xl border border-primary-100 bg-background p-3 shadow-md sm:flex-row sm:items-center sm:gap-2 sm:rounded-full"
     >
       <select
         name="zona"
