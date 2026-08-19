@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouteLoader } from "@/components/providers/RouteLoaderProvider";
 
 export default function Itinerario() {
   const [dias, setDias] = useState(3);
@@ -9,12 +10,14 @@ export default function Itinerario() {
   const [itinerario, setItinerario] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { empezarCarga, terminarCarga } = useRouteLoader();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setItinerario(null);
+    empezarCarga();
 
     try {
       const res = await fetch("/api/itinerario", {
@@ -29,6 +32,7 @@ export default function Itinerario() {
       setError(err.message);
     } finally {
       setLoading(false);
+      terminarCarga();
     }
   }
 

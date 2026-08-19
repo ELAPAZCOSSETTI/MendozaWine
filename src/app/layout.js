@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import RouteLoaderProvider from "@/components/providers/RouteLoaderProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -24,9 +26,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
       >
-        <Navbar />
-        <div className="flex-1">{children}</div>
-        <Footer />
+        <Suspense fallback={null}>
+          <RouteLoaderProvider>
+            <Navbar />
+            <div className="flex-1">{children}</div>
+            <Footer />
+          </RouteLoaderProvider>
+        </Suspense>
       </body>
     </html>
   );

@@ -2,10 +2,12 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { TIPOS, TIPO_LABELS } from "@/lib/data/constants";
+import { useRouteLoader } from "@/components/providers/RouteLoaderProvider";
 
 export default function CategoryPills() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { empezarCarga } = useRouteLoader();
   const tipoActivo = searchParams.get("tipo") ?? "";
 
   function seleccionarTipo(tipo) {
@@ -15,6 +17,7 @@ export default function CategoryPills() {
     } else {
       params.delete("tipo");
     }
+    empezarCarga();
     router.push(`/buscar?${params.toString()}`);
   }
 
