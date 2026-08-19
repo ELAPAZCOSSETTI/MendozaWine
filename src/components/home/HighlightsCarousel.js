@@ -81,7 +81,7 @@ export default function HighlightsCarousel({ items }) {
             type="button"
             onClick={anterior}
             aria-label="Anterior"
-            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-cream-50/20 p-2 text-cream-50 opacity-0 backdrop-blur transition-opacity hover:bg-cream-50/30 focus-visible:opacity-100 group-hover:opacity-100"
+            className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-cream-50/20 p-2 text-cream-50 opacity-100 backdrop-blur transition-opacity hover:bg-cream-50/30 focus-visible:opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
               <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
@@ -92,7 +92,7 @@ export default function HighlightsCarousel({ items }) {
             type="button"
             onClick={siguiente}
             aria-label="Siguiente"
-            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-cream-50/20 p-2 text-cream-50 opacity-0 backdrop-blur transition-opacity hover:bg-cream-50/30 focus-visible:opacity-100 group-hover:opacity-100"
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-cream-50/20 p-2 text-cream-50 opacity-100 backdrop-blur transition-opacity hover:bg-cream-50/30 focus-visible:opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
               <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
