@@ -1,19 +1,11 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { RouteLoaderContext } from "@/lib/route-loader-context";
 import LoadingOverlay from "@/components/ui/LoadingOverlay";
 
 const DURACION_MIN_MS = 1000;
-
-const RouteLoaderContext = createContext({
-  empezarCarga: () => {},
-  terminarCarga: () => {},
-});
-
-export function useRouteLoader() {
-  return useContext(RouteLoaderContext);
-}
 
 export default function RouteLoaderProvider({ children }) {
   const pathname = usePathname();
@@ -22,6 +14,7 @@ export default function RouteLoaderProvider({ children }) {
   const [listo, setListo] = useState(false);
   const inicioRef = useRef(null);
   const claveRef = useRef(`${pathname}?${searchParams.toString()}`);
+  const timerRef = useRef(null);
 
   function empezarCarga() {
     inicioRef.current = Date.now();
@@ -29,9 +22,10 @@ export default function RouteLoaderProvider({ children }) {
   }
 
   function terminarCarga() {
+    clearTimeout(timerRef.current);
     const transcurrido = Date.now() - (inicioRef.current ?? Date.now());
     const restante = Math.max(DURACION_MIN_MS - transcurrido, 0);
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setCargando(false);
       setListo(true);
     }, restante);
@@ -40,6 +34,7 @@ export default function RouteLoaderProvider({ children }) {
   useEffect(() => {
     inicioRef.current = Date.now();
     terminarCarga();
+    return () => clearTimeout(timerRef.current);
   }, []);
 
   useEffect(() => {

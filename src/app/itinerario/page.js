@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouteLoader } from "@/components/providers/RouteLoaderProvider";
+import { useRouteLoader } from "@/lib/route-loader-context";
 
 export default function Itinerario() {
   const [dias, setDias] = useState(3);

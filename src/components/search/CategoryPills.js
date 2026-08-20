@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { TIPOS, TIPO_LABELS } from "@/lib/data/constants";
-import { useRouteLoader } from "@/components/providers/RouteLoaderProvider";
+import { useRouteLoader } from "@/lib/route-loader-context";
 
 export default function CategoryPills() {
   const router = useRouter();
