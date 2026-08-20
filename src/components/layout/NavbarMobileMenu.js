@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import HomeLink from "@/components/layout/HomeLink";
 
 const ENLACES = [
   { href: "/", label: "Inicio" },
@@ -35,17 +36,26 @@ export default function NavbarMobileMenu() {
       {abierto && (
         <div className="absolute inset-x-0 top-full border-b border-primary-100 bg-background px-4 pb-4 shadow-md">
           <ul className="flex flex-col gap-1 pt-2 text-sm font-medium text-foreground">
-            {ENLACES.map((enlace) => (
-              <li key={enlace.href}>
-                <Link
-                  href={enlace.href}
-                  onClick={() => setAbierto(false)}
-                  className="block rounded-lg px-3 py-2 hover:bg-primary-500/10"
-                >
-                  {enlace.label}
-                </Link>
-              </li>
-            ))}
+            {ENLACES.map((enlace) => {
+              const className = "block rounded-lg px-3 py-2 hover:bg-primary-500/10";
+              return (
+                <li key={enlace.href}>
+                  {enlace.href === "/" ? (
+                    <HomeLink onNavigate={() => setAbierto(false)} className={className}>
+                      {enlace.label}
+                    </HomeLink>
+                  ) : (
+                    <Link
+                      href={enlace.href}
+                      onClick={() => setAbierto(false)}
+                      className={className}
+                    >
+                      {enlace.label}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}

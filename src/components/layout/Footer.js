@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HomeLink from "@/components/layout/HomeLink";
 import { ZONAS, TIPOS, TIPO_LABELS } from "@/lib/data/constants";
 
 export default function Footer() {
@@ -20,9 +21,7 @@ export default function Footer() {
             </h3>
             <ul className="mt-3 flex flex-col gap-2 text-sm">
               <li>
-                <Link href="/" className="hover:text-accent-300">
-                  Inicio
-                </Link>
+                <HomeLink className="hover:text-accent-300">Inicio</HomeLink>
               </li>
               <li>
                 <Link href="/buscar" className="hover:text-accent-300">
