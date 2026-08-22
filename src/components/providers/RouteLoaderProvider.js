@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { RouteLoaderContext } from "@/lib/route-loader-context";
 import LoadingOverlay from "@/components/ui/LoadingOverlay";
+import RouteWatcher from "@/components/providers/RouteWatcher";
 
 const DURACION_MIN_MS = 1000;
 const TIEMPO_MAXIMO_SEGURIDAD_MS = 5000;
@@ -14,12 +14,10 @@ function claveDeRuta(pathname, search) {
 }
 
 export default function RouteLoaderProvider({ children }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [cargando, setCargando] = useState(true);
   const [listo, setListo] = useState(false);
   const inicioRef = useRef(null);
-  const claveRef = useRef(claveDeRuta(pathname, searchParams.toString()));
+  const claveRef = useRef(null);
   const timerRef = useRef(null);
   const timerSeguridadRef = useRef(null);
 
@@ -40,6 +38,22 @@ export default function RouteLoaderProvider({ children }) {
     clearTimeout(timerSeguridadRef.current);
     timerSeguridadRef.current = setTimeout(terminarCarga, TIEMPO_MAXIMO_SEGURIDAD_MS);
   }, [terminarCarga]);
+
+  const manejarCambioRuta = useCallback(
+    (pathname, search) => {
+      const claveNueva = claveDeRuta(pathname, search);
+      if (claveRef.current === null) {
+        // primer aviso del sensor: solo registrar la ruta inicial, ya la
+        // cierra el efecto de montaje de abajo.
+        claveRef.current = claveNueva;
+        return;
+      }
+      if (claveNueva === claveRef.current) return;
+      claveRef.current = claveNueva;
+      terminarCarga();
+    },
+    [terminarCarga],
+  );
 
   useEffect(() => {
     inicioRef.current = Date.now();
@@ -76,15 +90,11 @@ export default function RouteLoaderProvider({ children }) {
     };
   }, [empezarCarga]);
 
-  useEffect(() => {
-    const claveNueva = claveDeRuta(pathname, searchParams.toString());
-    if (claveNueva === claveRef.current) return;
-    claveRef.current = claveNueva;
-    terminarCarga();
-  }, [pathname, searchParams, terminarCarga]);
-
   return (
     <RouteLoaderContext.Provider value={{ empezarCarga, terminarCarga }}>
+      <Suspense fallback={null}>
+        <RouteWatcher onChange={manejarCambioRuta} />
+      </Suspense>
       <div
         className={`flex min-h-screen flex-col transition-opacity duration-700 ${listo ? "opacity-100" : "opacity-0"}`}
       >

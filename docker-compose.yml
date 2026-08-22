@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: mendoza_wine_db
+    restart: unless-stopped
+    command: >
+      postgres -c shared_buffers=32MB -c max_connections=20
+    environment:
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mendoza_wine_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - mendoza_wine_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U usuario -d mendoza_wine_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mendoza_wine_pgdata:

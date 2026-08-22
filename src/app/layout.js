@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -26,13 +25,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
       >
-        <Suspense fallback={null}>
-          <RouteLoaderProvider>
-            <Navbar />
-            <div className="flex-1">{children}</div>
-            <Footer />
-          </RouteLoaderProvider>
-        </Suspense>
+        <RouteLoaderProvider>
+          <Navbar />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </RouteLoaderProvider>
       </body>
     </html>
   );

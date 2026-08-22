@@ -2,6 +2,7 @@
 const nextConfig = {
   reactCompiler: true,
   reactStrictMode: true,
+  serverExternalPackages: ["knex"],
   images: {
     remotePatterns: [
       {
