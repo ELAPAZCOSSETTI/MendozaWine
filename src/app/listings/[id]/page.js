@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Gallery from "@/components/listings/Gallery";
 import Badge from "@/components/ui/Badge";
+import BookingForm from "@/components/listings/BookingForm";
 import ListingGrid from "@/components/listings/ListingGrid";
 import { TAG_LABELS, TIPO_LABELS } from "@/lib/data/constants";
 import { getListingById, getListings } from "@/lib/repositories/listings";
@@ -141,17 +142,7 @@ export default async function ListingDetalle({ params }) {
             </ul>
           )}
 
-          <button
-            type="button"
-            disabled
-            className="mt-5 w-full cursor-not-allowed rounded-full bg-primary-500/50 px-5 py-3 text-sm font-semibold text-background"
-          >
-            Reservar (muy pronto)
-          </button>
-          <p className="mt-3 text-xs text-stone-500">
-            Esta etapa de BodegaPass es solo de descubrimiento — la reserva en
-            línea todavía no está disponible.
-          </p>
+          <BookingForm listingId={listing.id} />
         </aside>
       </div>
 
