@@ -4,6 +4,9 @@ Plataforma full stack de turismo enológico en Mendoza. Permite descubrir bodega
 
 Portfolio: [github.com/ELAPAZCOSSETTI/PortfolioWeb](https://github.com/ELAPAZCOSSETTI/PortfolioWeb)
 
+![Home](https://raw.githubusercontent.com/ELAPAZCOSSETTI/PortfolioWeb/main/public/projects/bodegapass-home.jpg)
+![Buscador](https://raw.githubusercontent.com/ELAPAZCOSSETTI/PortfolioWeb/main/public/projects/bodegapass-buscar.jpg)
+
 ## Features
 
 - Buscador de bodegas, restaurantes y experiencias con filtros por zona, precio y tags (pet-friendly, vistas a la cordillera, cata premium, etc.)
